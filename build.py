@@ -20,11 +20,11 @@ authors = [Author('Schlomo Schapiro', ''),
            Author('Valentin Haenel', ''),
            Author('Marco Hoyer', ''),
            ]
-license="GPL"
-description="Get monitoring configuration in YAML format via HTTP and generate icinga host and check config"
-summary = "Fluent interface facade for Michael Foord's mock."
+license = "GPL"
+description = "Get monitoring configuration in YAML format via HTTP and generate icinga host and check config"
+summary = description
 version = '5'
-url="https://github.com/ImmobilienScout24/monitoring-config-generator.git"
+url = "https://github.com/ImmobilienScout24/monitoring-config-generator.git"
 
 
 @init
@@ -42,8 +42,10 @@ def set_properties(project):
     project.get_property('copy_resources_glob').extend(
             ['setup.cfg', 'LICENSE.TXT', 'README.md', 'MANIFEST.in'])
 
+
 @init(environments='teamcity')
 def set_properties_for_teamcity_builds(project):
     import os
     project.version = '%s-%s' % (project.version, os.environ.get('BUILD_NUMBER', 0))
     project.default_task = ['install_dependencies', 'publish']
+    project.set_property('distutils_commands', ['sdist upload -r dev'])
